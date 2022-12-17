@@ -1,7 +1,5 @@
-import { List, listClasses, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import React from 'react'
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { ArchitectureOutlined, DeleteOutline, LightbulbOutlined } from '@mui/icons-material';
 const NavList = ({open}) => {
    const NavMenu = [

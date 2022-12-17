@@ -1,11 +1,12 @@
 import './App.css';
-import Home from './components/Home';
+import Notes from './pages/Notes';
+import DataProvider from './context/DataProvider';
 
 function App() {
   return (
-    <div>
-      <Home/>
-    </div>
+    <DataProvider>
+      <Notes/>
+    </DataProvider>
   );
 }
 
