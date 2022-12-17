@@ -1,9 +1,9 @@
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { ArchiveOutlined, DeleteOutline } from "@mui/icons-material";
+import { UnarchiveOutlined, DeleteOutline } from "@mui/icons-material";
 import { useContext } from "react";
-import { DataContext } from "../context/DataProvider";
+import { DataContext } from "../../context/DataProvider";
 
 const StyledCard = styled(Card)`
   width: 240px;
@@ -13,18 +13,20 @@ const StyledCard = styled(Card)`
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 `;
-const NoteList = ({ note }) => {
-  const {notes , setNotes  , setArchiveNotes , setDeletedNotes } = useContext(DataContext)
 
-   const archiveNote = (note) => {
-    const updatedNotes =  notes.filter(data => data.id !== note.id)
-    setNotes(updatedNotes)
-    setArchiveNotes(preArr => [note , ...preArr])
+
+const ArchiveNote = ({ note}) => {
+  const { setNotes  , archiveNotes , setArchiveNotes , setDeletedNotes } = useContext(DataContext)
+
+   const UnarchiveNote = (note) => {
+    const updatedNotes =  archiveNotes.filter(data => data.id !== note.id)
+    setArchiveNotes(updatedNotes)
+    setNotes(preArr => [note , ...preArr])
    }
 
    const deleteNote = (note) => {
-    const updatedNotes =  notes.filter(data => data.id !== note.id)
-    setNotes(updatedNotes)
+    const updatedNotes =  archiveNotes.filter(data => data.id !== note.id)
+    setArchiveNotes(updatedNotes)
     setDeletedNotes(preArr => [note , ...preArr])
 
    }
@@ -36,8 +38,8 @@ const NoteList = ({ note }) => {
         <Typography>{note.text}</Typography>
       </CardContent>
       <CardActions>
-        <ArchiveOutlined 
-        onClick={() => archiveNote(note)}
+        <UnarchiveOutlined 
+        onClick={() => UnarchiveNote(note)}
         style={{ marginLeft: "auto", cursor: "pointer" }} 
         
         />
@@ -53,4 +55,4 @@ const NoteList = ({ note }) => {
 
 //   <p>{map.heading}</p>
 //<p>{map.text}</p>
-export default NoteList;
+export default ArchiveNote;

@@ -1,9 +1,10 @@
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { ArchiveOutlined, DeleteOutline } from "@mui/icons-material";
+import {  DeleteForeverOutlined, DeleteOutline, RestoreFromTrashOutlined } from "@mui/icons-material";
 import { useContext } from "react";
-import { DataContext } from "../context/DataProvider";
+import { DataContext } from "../../context/DataProvider";
+
 
 const StyledCard = styled(Card)`
   width: 240px;
@@ -13,20 +14,18 @@ const StyledCard = styled(Card)`
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 `;
-const NoteList = ({ note }) => {
-  const {notes , setNotes  , setArchiveNotes , setDeletedNotes } = useContext(DataContext)
+const DeleteNote = ({ note }) => {
+  const {notes , setNotes  , setDeletedNotes , deletedNotes } = useContext(DataContext)
 
-   const archiveNote = (note) => {
-    const updatedNotes =  notes.filter(data => data.id !== note.id)
-    setNotes(updatedNotes)
-    setArchiveNotes(preArr => [note , ...preArr])
+   const restoreNote = (note) => {
+    const updatedNotes =  deletedNotes.filter(data => data.id !== note.id)
+    setDeletedNotes(updatedNotes)
+    setNotes(preArr => [note , ...preArr])
    }
 
    const deleteNote = (note) => {
     const updatedNotes =  notes.filter(data => data.id !== note.id)
-    setNotes(updatedNotes)
-    setDeletedNotes(preArr => [note , ...preArr])
-
+    setDeletedNotes(updatedNotes)
    }
 
   return (
@@ -36,21 +35,19 @@ const NoteList = ({ note }) => {
         <Typography>{note.text}</Typography>
       </CardContent>
       <CardActions>
-        <ArchiveOutlined 
-        onClick={() => archiveNote(note)}
+        <RestoreFromTrashOutlined 
+        onClick={() => restoreNote(note)}
         style={{ marginLeft: "auto", cursor: "pointer" }} 
         
         />
-        <DeleteOutline 
+        <DeleteForeverOutlined 
         style={{ cursor: "pointer" }} 
         onClick={() => deleteNote(note)}
-        
         />
       </CardActions>
     </StyledCard>
   );
 };
 
-//   <p>{map.heading}</p>
-//<p>{map.text}</p>
-export default NoteList;
+
+export default DeleteNote;

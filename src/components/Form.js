@@ -55,7 +55,7 @@ const Form = () => {
     }
     setAddNote({ ...initialNote, id: uuid() });
   };
-  console.log(notes);
+
 
   const onTextChange = (e) => {
     let NewNote = { ...addNote, [e.target.name]: e.target.value };
