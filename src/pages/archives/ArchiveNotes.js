@@ -16,7 +16,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const ArchiveNotes = () => {
     const {archiveNotes} = useContext(DataContext)
-    console.log(archiveNotes)
   return (
     <Box sx={{ display: "flex" }}>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

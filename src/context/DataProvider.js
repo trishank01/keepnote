@@ -9,8 +9,7 @@ const DataProvider = ({children}) => {
     const [notes , setNotes] = useState([])
     const [archiveNotes , setArchiveNotes] = useState([])
     const [deletedNotes , setDeletedNotes] = useState([])
-    console.log("archiveNotes" , archiveNotes)
-    console.log("notes" , notes)
+
     return (
         <DataContext.Provider value={{
             notes,

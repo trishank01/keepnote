@@ -18,7 +18,7 @@ import {
 import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
 import { Box } from "@mui/system";
-
+import ModalBox from "./Modal";
 
 const StyledCard = styled(Card)`
   width: 260px;
@@ -40,19 +40,15 @@ const StyleText = styled(Typography)`
 `;
 
 const StyledBox = styled(Box)`
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin: 5px;
+  border: 2px solid #000;
+  cursor: pointer;
+`;
 
-   width: 35px;
-   height: 35px;
-   border-radius: 50%;
-   margin: 5px;
-   border: 2px solid #000;
-   cursor: pointer;
-`
-
-
-
-
-const NoteList = ({ note }) => {
+const NoteList = ({ note , index }) => {
   const { notes, setNotes, setArchiveNotes, setDeletedNotes } =
     useContext(DataContext);
 
@@ -70,8 +66,14 @@ const NoteList = ({ note }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const [bgColor , setBgColor] = useState(["#FDCFE8" , "#F28B82" , "#FBBC04" , "#FFF475" , "#CCFF90"])
-  const [bgCardColor , setBgCardColor] = useState("")
+  const [bgColor, setBgColor] = useState([
+    "#FDCFE8",
+    "#F28B82",
+    "#FBBC04",
+    "#FFF475",
+    "#CCFF90",
+  ]);
+  const [bgCardColor, setBgCardColor] = useState("");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -81,16 +83,19 @@ const NoteList = ({ note }) => {
     setAnchorEl(null);
   };
 
-
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   const handleBgColorChange = (color) => {
-    setBgCardColor(color)
-  }
+    setBgCardColor(color);
+  };
+
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleOpen = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   return (
-    <StyledCard style={{backgroundColor: bgCardColor}}>
+    <StyledCard style={{ backgroundColor: bgCardColor }}>
       <StyledCardContent>
         <StyleText>{note.heading}</StyleText>
         <Divider style={{ margin: "4px" }} />
@@ -108,29 +113,40 @@ const NoteList = ({ note }) => {
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
-         
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
+            vertical: "bottom",
+            horizontal: "center",
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
+            vertical: "top",
+            horizontal: "center",
           }}
         >
-          <div style={{display : 'flex'}}>
-           {bgColor.map((color)=> ( 
-          <StyledBox 
-          style={{backgroundColor:color}}
-          onClick={() => handleBgColorChange(color)}
-          />
-          ))}
+          <div style={{ display: "flex" }}>
+            {bgColor.map((color) => (
+              <StyledBox
+                 key={color}
+                style={{ backgroundColor: color }}
+                onClick={() => handleBgColorChange(color)}
+              />
+            ))}
           </div>
-      
-          
         </Popover>
-        <BorderColorOutlined   style={{ cursor: "pointer" }}/>
-        <ArchiveOutlined onClick={() => archiveNote(note)}   style={{ cursor: "pointer" }}/>
+        <BorderColorOutlined 
+        style={{ cursor: "pointer" }} 
+        onClick={handleOpen}
+        />
+        <ModalBox 
+        open={openModal} 
+        handleCloseModal={handleCloseModal}
+        setOpenModal={setOpenModal}
+        note={note}
+        index={index}
+        />
+        <ArchiveOutlined
+          onClick={() => archiveNote(note)}
+          style={{ cursor: "pointer" }}
+        />
         <DeleteOutline
           style={{ cursor: "pointer" }}
           onClick={() => deleteNote(note)}
@@ -140,6 +156,5 @@ const NoteList = ({ note }) => {
   );
 };
 
-//   <p>{map.heading}</p>
-//<p>{map.text}</p>
+
 export default NoteList;

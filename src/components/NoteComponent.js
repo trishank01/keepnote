@@ -61,7 +61,7 @@ const NoteComponent = () => {
                           {...provided.dragHandleProps}
                           item
                         >
-                          <NoteList note={note} />
+                          <NoteList note={note} index={index}/>
                         </Grid>
                       )}
                     </Draggable>

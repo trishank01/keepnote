@@ -76,8 +76,8 @@ const Form = () => {
               onChange={(e) => onTextChange(e)}
               value={addNote.heading}
             />
-            <AlertBox severity="success" color="info">
-               click OutSide Box to Add Notes
+            <AlertBox  color="info">
+               Click OutSide Box to Add Notes
             </AlertBox>
           </>
         )}
