@@ -48,20 +48,32 @@ const StyledBox = styled(Box)`
   cursor: pointer;
 `;
 
-const NoteList = ({ note , index }) => {
-  const { notes, setNotes, setArchiveNotes, setDeletedNotes } =
-    useContext(DataContext);
+
+
+const NoteList = ({ note, index }) => {
+  const {
+    notes,
+    setNotes,
+    setArchiveNotes,
+    setDeletedNotes,
+    archiveNotes,
+    deletedNotes,
+  } = useContext(DataContext);
 
   const archiveNote = (note) => {
     const updatedNotes = notes.filter((data) => data.id !== note.id);
     setNotes(updatedNotes);
     setArchiveNotes((preArr) => [note, ...preArr]);
+    localStorage.setItem("notes", JSON.stringify([...updatedNotes]));
+    localStorage.setItem("archive", JSON.stringify([note, ...archiveNotes]));
   };
 
   const deleteNote = (note) => {
     const updatedNotes = notes.filter((data) => data.id !== note.id);
     setNotes(updatedNotes);
     setDeletedNotes((preArr) => [note, ...preArr]);
+    localStorage.setItem("notes", JSON.stringify([...updatedNotes]));
+    localStorage.setItem("delete", JSON.stringify([note, ...deletedNotes]));
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -73,7 +85,7 @@ const NoteList = ({ note , index }) => {
     "#FFF475",
     "#CCFF90",
   ]);
-  const [bgCardColor, setBgCardColor] = useState("");
+  
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -86,16 +98,33 @@ const NoteList = ({ note , index }) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const handleBgColorChange = (color) => {
-    setBgCardColor(color);
+
+
+  const [bgColorChange, setbgColorChange] = useState(JSON.parse(localStorage.getItem("notes"))[index].bgColorData || "")
+
+  
+
+  const handleBgColorChange = (color, id) => {
+    setbgColorChange(color)
+    const updateColor = notes.map((item) => {
+      if (item.id === id) {
+        return {...item, bgColorData : color };
+      } else {
+        return item;
+      }
+    })
+   localStorage.setItem("notes" , JSON.stringify(updateColor))
   };
+
+   const colorChange = notes.map((item) => item.id === note.id && note.bgColorData)
+  
 
   const [openModal, setOpenModal] = React.useState(false);
   const handleOpen = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
   return (
-    <StyledCard style={{ backgroundColor: bgCardColor }}>
+    <StyledCard style={{ backgroundColor: bgColorChange }}>
       <StyledCardContent>
         <StyleText>{note.heading}</StyleText>
         <Divider style={{ margin: "4px" }} />
@@ -125,23 +154,23 @@ const NoteList = ({ note , index }) => {
           <div style={{ display: "flex" }}>
             {bgColor.map((color) => (
               <StyledBox
-                 key={color}
+                key={color}
                 style={{ backgroundColor: color }}
-                onClick={() => handleBgColorChange(color)}
+                onClick={() => handleBgColorChange(color, note.id)}
               />
             ))}
           </div>
         </Popover>
-        <BorderColorOutlined 
-        style={{ cursor: "pointer" }} 
-        onClick={handleOpen}
+        <BorderColorOutlined
+          style={{ cursor: "pointer" }}
+          onClick={handleOpen}
         />
-        <ModalBox 
-        open={openModal} 
-        handleCloseModal={handleCloseModal}
-        setOpenModal={setOpenModal}
-        note={note}
-        index={index}
+        <ModalBox
+          open={openModal}
+          handleCloseModal={handleCloseModal}
+          setOpenModal={setOpenModal}
+          note={note}
+          index={index}
         />
         <ArchiveOutlined
           onClick={() => archiveNote(note)}
@@ -155,6 +184,5 @@ const NoteList = ({ note , index }) => {
     </StyledCard>
   );
 };
-
 
 export default NoteList;

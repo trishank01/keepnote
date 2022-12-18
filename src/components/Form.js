@@ -34,6 +34,7 @@ const initialNote = {
   id: "",
   heading: "",
   text: "",
+  bgColorData : null
 };
 
 const Form = () => {
@@ -52,8 +53,10 @@ const Form = () => {
     containerRef.current.style.minHeight = "35px";
     if (addNote.heading || addNote.text) {
       setNotes((prevState) => [addNote, ...prevState]);
+      localStorage.setItem("notes" , JSON.stringify([addNote , ...notes  ]))
     }
     setAddNote({ ...initialNote, id: uuid() });
+   
   };
 
 

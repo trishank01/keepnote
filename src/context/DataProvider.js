@@ -6,9 +6,9 @@ export const DataContext = createContext(null)
 
 
 const DataProvider = ({children}) => {
-    const [notes , setNotes] = useState([])
-    const [archiveNotes , setArchiveNotes] = useState([])
-    const [deletedNotes , setDeletedNotes] = useState([])
+    const [notes , setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || [])
+    const [archiveNotes , setArchiveNotes] = useState(JSON.parse(localStorage.getItem("archive")) || [])
+    const [deletedNotes , setDeletedNotes] = useState(JSON.parse(localStorage.getItem("delete")) || [])
 
     return (
         <DataContext.Provider value={{

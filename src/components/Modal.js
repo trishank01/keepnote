@@ -50,7 +50,7 @@ const ModalBox = ({ open, handleCloseModal, note  ,setOpenModal  }) => {
     setOpenModal(false)
   }
 
-  console.log(notes)
+
 
   return (
     <div>
