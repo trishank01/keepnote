@@ -116,9 +116,6 @@ const NoteList = ({ note, index }) => {
    localStorage.setItem("notes" , JSON.stringify(updateColor))
   };
 
-   const colorChange = notes.map((item) => item.id === note.id && note.bgColorData)
-  
-
   const [openModal, setOpenModal] = React.useState(false);
   const handleOpen = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
