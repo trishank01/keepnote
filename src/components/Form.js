@@ -34,7 +34,7 @@ const initialNote = {
   id: "",
   heading: "",
   text: "",
-  bgColorData : null
+  bgColorData : ""
 };
 
 const Form = () => {

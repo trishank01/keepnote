@@ -98,6 +98,8 @@ const NoteList = ({ note, index }) => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  
+
 
 
   const [bgColorChange, setbgColorChange] = useState(JSON.parse(localStorage.getItem("notes"))[index].bgColorData || "")
@@ -113,6 +115,7 @@ const NoteList = ({ note, index }) => {
         return item;
       }
     })
+     setNotes(updateColor)
    localStorage.setItem("notes" , JSON.stringify(updateColor))
   };
 

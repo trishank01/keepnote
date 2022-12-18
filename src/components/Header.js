@@ -30,7 +30,6 @@ const Header = ({open , handleDrawer }) => {
             <MenuIcon />
           </IconButton>
           <img src={logo} alt='logo'/>
-          <Heading> Mini variant drawer</Heading>
         </Toolbar>
       </HeaderBox>
   )
