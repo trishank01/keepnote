@@ -10,6 +10,7 @@ const DataProvider = ({children}) => {
     const [archiveNotes , setArchiveNotes] = useState(JSON.parse(localStorage.getItem("archive")) || [])
     const [deletedNotes , setDeletedNotes] = useState(JSON.parse(localStorage.getItem("delete")) || [])
 // updating
+//checking github link
     return (
         <DataContext.Provider value={{
             notes,
